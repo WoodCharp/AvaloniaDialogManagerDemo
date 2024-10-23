@@ -1,0 +1,25 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" x:Class="AvaloniaDialogManagerDemo.Views.DialogItemView"
+             xmlns:vm="using:AvaloniaDialogManagerDemo.ViewModels"
+             x:DataType="vm:DialogItemViewModel">
+
+  <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="120, 120" Margin="10">
+
+    <Label Grid.Row="0" Grid.Column="0" Content="Name" Margin="5"/>
+    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Margin="5"/>
+
+    <Label Grid.Row="1" Grid.Column="0" Content="Unit price" Margin="5"/>
+    <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding UnitPrice}" Margin="5"/>
+
+    <Label Grid.Row="2" Grid.Column="0" Content="Measuring unit" Margin="5"/>
+    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding MeasuringUnit}" Margin="5"/>
+
+    <Label Grid.Row="3" Grid.Column="0" Content="Amount" Margin="5"/>
+    <NumericUpDown Grid.Row="3" Grid.Column="1" Value="{Binding Amount}" Margin="5"/>
+
+  </Grid>
+  
+</UserControl>

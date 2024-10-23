@@ -1,0 +1,31 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AvaloniaDialogManagerDemo.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mo="using:AvaloniaDialogManagerDemo.Models"
+        mc:Ignorable="d" Width="500" Height="400" WindowStartupLocation="CenterScreen"
+        x:Class="AvaloniaDialogManagerDemo.Views.MainWindow" x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Avalonia Dialog Manager Demo">
+
+  <Grid RowDefinitions="Auto, *" Margin="10">
+
+    <StackPanel Grid.Row="0" Orientation="Horizontal">
+      <Button Content="New" Command="{Binding NewCommand}"/>
+      <Button Content="Edit" Command="{Binding EditCommand}" IsEnabled="{Binding IsItemSelected}"/>
+      <Button Content="Delete" Margin="40,0,0,0" Command="{Binding DeleteCommand}" IsEnabled="{Binding IsItemSelected}"/>
+    </StackPanel>
+
+    <DataGrid Grid.Row="1" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}"
+              IsReadOnly="true" SelectionMode="Single" CanUserResizeColumns="True">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Name" Width="100" x:DataType="mo:ItemModel" Binding="{Binding Name}"/>
+        <DataGridTextColumn Header="Unit price" Width="125" x:DataType="mo:ItemModel" Binding="{Binding UnitPrice}"/>
+        <DataGridTextColumn Header="Measuring unit" Width="150" x:DataType="mo:ItemModel" Binding="{Binding MeasuringUnit}"/>
+        <DataGridTextColumn Header="Amount" Width="100" x:DataType="mo:ItemModel" Binding="{Binding Amount}"/>
+      </DataGrid.Columns>
+    </DataGrid>
+  </Grid>
+
+</Window>
