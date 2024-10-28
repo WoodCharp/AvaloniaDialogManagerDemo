@@ -87,5 +87,3 @@ namespace AvaloniaDialogManagerDemo.ViewModels
     }
 }
 ```
-
-Gonna make the wiki pages later
