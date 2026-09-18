@@ -19,5 +19,14 @@ namespace AvaloniaDialogManagerDemo.Models
             Amount = amount;
             MeasuringUnit = measuringUnit;
         }
+
+        public ItemModel(string name, double unitPrice, double amount, string measuringUnit, string id)
+        {
+            ID = id;
+            Name = name;
+            UnitPrice = unitPrice;
+            Amount = amount;
+            MeasuringUnit = measuringUnit;
+        }
     }
 }

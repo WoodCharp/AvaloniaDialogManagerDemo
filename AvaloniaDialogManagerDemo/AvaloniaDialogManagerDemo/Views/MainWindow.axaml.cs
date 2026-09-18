@@ -7,7 +7,6 @@ namespace AvaloniaDialogManagerDemo.Views
         public MainWindow()
         {
             InitializeComponent();
-            DialogManager.SetMainWindow(this);
         }
     }
 }

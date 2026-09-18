@@ -1,10 +1,12 @@
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Markup.Xaml;
 
 namespace AvaloniaDialogManagerDemo.Views
 {
-    public partial class DialogButtonsView : UserControl
+    public partial class DialogInfoView : UserControl
     {
-        public DialogButtonsView()
+        public DialogInfoView()
         {
             InitializeComponent();
         }

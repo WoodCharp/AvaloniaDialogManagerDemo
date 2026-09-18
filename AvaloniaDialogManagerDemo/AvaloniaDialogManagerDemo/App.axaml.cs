@@ -1,10 +1,11 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
-using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using AvaloniaDialogManagerDemo.Core.Dialogs;
+using AvaloniaDialogManagerDemo.Services;
 using AvaloniaDialogManagerDemo.ViewModels;
 using AvaloniaDialogManagerDemo.Views;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AvaloniaDialogManagerDemo
 {
@@ -17,14 +18,17 @@ namespace AvaloniaDialogManagerDemo
 
         public override void OnFrameworkInitializationCompleted()
         {
+            var collection = new ServiceCollection();
+            collection.AddSingleton<IDialogService, DialogService>();
+            collection.AddTransient<MainWindowViewModel>();
+
+            var services = collection.BuildServiceProvider();
+
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                // Line below is needed to remove Avalonia data validation.
-                // Without this line you will get duplicate validations from both Avalonia and CT
-                BindingPlugins.DataValidators.RemoveAt(0);
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(),
+                    DataContext = services.GetRequiredService<MainWindowViewModel>()
                 };
             }
 

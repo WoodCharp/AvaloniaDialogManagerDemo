@@ -27,7 +27,7 @@ namespace AvaloniaDialogManagerDemo
 
         public bool Match(object? data)
         {
-            return data is ViewModelBase || data is DialogViewModelBase;
+            return data is ViewModelBase;
         }
     }
 }

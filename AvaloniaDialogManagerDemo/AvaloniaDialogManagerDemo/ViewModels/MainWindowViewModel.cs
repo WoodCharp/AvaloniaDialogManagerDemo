@@ -1,4 +1,5 @@
 ﻿using Avalonia.Collections;
+using AvaloniaDialogManagerDemo.Core.Dialogs;
 using AvaloniaDialogManagerDemo.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -8,6 +9,8 @@ namespace AvaloniaDialogManagerDemo.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
+        private readonly IDialogService _dialogService;
+
         [ObservableProperty]
         private ItemModel? selectedItem;
         [ObservableProperty]
@@ -15,11 +18,11 @@ namespace AvaloniaDialogManagerDemo.ViewModels
         [ObservableProperty]
         private bool isItemSelected = false;
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IDialogService dialogService)
         {
+            _dialogService = dialogService;
             items = new AvaloniaList<ItemModel>();
         }
-
         partial void OnSelectedItemChanged(ItemModel? value)
         {
             IsItemSelected = value != null;
@@ -28,31 +31,37 @@ namespace AvaloniaDialogManagerDemo.ViewModels
         [RelayCommand]
         private async Task New()
         {
-            var result = await DialogManager.ShowDialog(new DialogItemViewModel(null), "Create new item", ["Ok", "Cancel"]);
-            if (result.ButtonPressed == "Ok" && result.ReturningObject != null)
+            DialogResult<ItemModel> result = await _dialogService.ShowDialogAsync<ItemModel>(
+                contentViewModel: new DialogItemViewModel(SelectedItem),
+                title: "Create new item",
+                new[] { "Ok", "Cancel" },
+                DialogWindowSettings.ItemDialog(),
+                dialogService: _dialogService);
+
+            if(result.IsSuccess && result.Data != null)
             {
-                Items.Add((ItemModel)result.ReturningObject);
+                Items.Add(result.Data);
             }
         }
 
         [RelayCommand]
         private async Task Edit()
         {
-            if (SelectedItem == null) return;
+            DialogResult<ItemModel> result = await _dialogService.ShowDialogAsync<ItemModel>(
+                contentViewModel: new DialogItemViewModel(SelectedItem),
+                title: "Edit item",
+                new[] { "Ok", "Cancel" },
+                DialogWindowSettings.ItemDialog());
 
-            var result = await DialogManager.ShowDialog(new DialogItemViewModel(SelectedItem), "Edit item", ["Ok", "Cancel"]);
-
-            string oldId = SelectedItem.ID;
-
-            if (result.ButtonPressed == "Ok" && result.ReturningObject != null)
+            if (result.IsSuccess && result.Data != null)
             {
-                for(int i = 0; i < Items.Count; i++)
+                for(int i = 0; i <  Items.Count; i++)
                 {
-                    if (Items[i].ID == oldId)
+                    if (Items[i].ID == result.Data.ID)
                     {
                         Items.RemoveAt(i);
-                        Items.Insert(i, (ItemModel)result.ReturningObject);
-                        SelectedItem = (ItemModel)result.ReturningObject;
+                        Items.Insert(i, result.Data);
+                        SelectedItem = Items[i];
                         break;
                     }
                 }
@@ -64,9 +73,13 @@ namespace AvaloniaDialogManagerDemo.ViewModels
         {
             if (SelectedItem == null) return;
 
-            var result = await DialogManager.ShowDialog(new DialogMessageViewModel($"Delete {SelectedItem.Name}?"), "Delete item", ["Ok", "Cancel"]);
+            DialogButtonResult result = await _dialogService.ShowInfoAsync(
+                message: $"Delete {SelectedItem.Name} ?",
+                buttons: new[] { "Yes", "No" },
+                title: "Delete item",
+                settings: DialogWindowSettings.InfoDialog());
 
-            if(result.ButtonPressed == "Ok")
+            if(result == DialogButtonResult.Yes)
             {
                 Items.Remove(SelectedItem);
                 SelectedItem = null;
