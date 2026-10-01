@@ -60,11 +60,11 @@ namespace AvaloniaDialogManagerDemo.Views
 
         private async void OnDialogButtonClick(object? sender, RoutedEventArgs e)
         {
-            if (!await IsValid())
-                return;
-
             if (sender is Button button && button.Content is string text)
             {
+                if (button.IsDefault && !await IsValid())
+                    return;
+
                 ClickedButtonText = text;
                 Close();
             }
@@ -86,7 +86,7 @@ namespace AvaloniaDialogManagerDemo.Views
                     if (!dv.IsValid && dialogService != null)
                     {
                         await dialogService.ShowInfoAsync(dv.InvalidMessage ?? "InvalidMessage was not found.",
-                            "Information", new[] { "Ok" }, DialogWindowSettings.InfoDialog());
+                            "Information", new[] { "Ok" }, DialogWindowSettings.SizeToContent());
                         return false;
                     }
                 }

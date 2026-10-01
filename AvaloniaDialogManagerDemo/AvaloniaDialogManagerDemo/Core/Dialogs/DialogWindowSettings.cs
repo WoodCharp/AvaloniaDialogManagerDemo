@@ -11,7 +11,9 @@
         public double? MaxWidth { get; set; }
         public double? MaxHeight { get; set; }
 
-        public static DialogWindowSettings Fixed(double width = 400, double height = 280, bool showInTaskBar = false) => new()
+        public static DialogWindowSettings Fixed(
+            double width = 400, double height = 280,
+            bool showInTaskBar = false) => new()
         {
             CanResize = false,
             ShowInTaskBar = showInTaskBar,
@@ -39,24 +41,10 @@
                 MaxHeight = maxHeight
             };
 
-        public static DialogWindowSettings ItemDialog() => new()
+        public static DialogWindowSettings SizeToContent() => new()
         {
             CanResize = false,
-            ShowInTaskBar = false,
-            Width = 250,
-            MinWidth = 250,
-            Height = 250,
-            MinHeight = 250
-        };
-
-        public static DialogWindowSettings InfoDialog() => new()
-        {
-            CanResize = false,
-            ShowInTaskBar = false,
-            Width = 250,
-            MinWidth = 250,
-            Height = 150,
-            MinHeight = 150
+            ShowInTaskBar = false
         };
     }
 }

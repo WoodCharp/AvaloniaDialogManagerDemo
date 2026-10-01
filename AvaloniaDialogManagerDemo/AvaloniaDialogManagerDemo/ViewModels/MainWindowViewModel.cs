@@ -35,7 +35,7 @@ namespace AvaloniaDialogManagerDemo.ViewModels
                 contentViewModel: new DialogItemViewModel(SelectedItem),
                 title: "Create new item",
                 new[] { "Ok", "Cancel" },
-                DialogWindowSettings.ItemDialog(),
+                DialogWindowSettings.SizeToContent(),
                 dialogService: _dialogService);
 
             if(result.IsSuccess && result.Data != null)
@@ -51,7 +51,7 @@ namespace AvaloniaDialogManagerDemo.ViewModels
                 contentViewModel: new DialogItemViewModel(SelectedItem),
                 title: "Edit item",
                 new[] { "Ok", "Cancel" },
-                DialogWindowSettings.ItemDialog());
+                DialogWindowSettings.SizeToContent());
 
             if (result.IsSuccess && result.Data != null)
             {
@@ -77,7 +77,7 @@ namespace AvaloniaDialogManagerDemo.ViewModels
                 message: $"Delete {SelectedItem.Name} ?",
                 buttons: new[] { "Yes", "No" },
                 title: "Delete item",
-                settings: DialogWindowSettings.InfoDialog());
+                settings: DialogWindowSettings.SizeToContent());
 
             if(result == DialogButtonResult.Yes)
             {

@@ -15,6 +15,7 @@ namespace AvaloniaDialogManagerDemo.Core.Dialogs
             string message,
             string title,
             string[] buttons,
-            DialogWindowSettings? settings = null);
+            DialogWindowSettings? settings = null,
+            IDialogService? dialogService = null);
     }
 }

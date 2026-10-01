@@ -9,6 +9,7 @@
       <TextBlock Text="{Binding Message}"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
-               TextWrapping="Wrap"/>
+               TextWrapping="Wrap"
+               Margin="30,15"/>
 
 </UserControl>

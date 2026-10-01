@@ -11,10 +11,10 @@ namespace AvaloniaDialogManagerDemo.Services
             return await DialogManager.ShowDialogAsync<TData>(contentViewModel, title, buttons, settings, dialogService);
         }
 
-        public async Task<DialogButtonResult> ShowInfoAsync(string message, string title, string[] buttons, DialogWindowSettings? settings = null)
+        public async Task<DialogButtonResult> ShowInfoAsync(string message, string title, string[] buttons, DialogWindowSettings? settings = null, IDialogService? dialogService = null)
         {
             var vm = new DialogInfoViewModel(message);
-            var result = await ShowDialogAsync<object>(vm, title, buttons, settings);
+            var result = await ShowDialogAsync<object>(vm, title, buttons, settings, dialogService);
             return result.Result;
         }
     }
